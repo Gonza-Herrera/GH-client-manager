@@ -1,0 +1,22 @@
+<section class="center">
+  <mat-card class="card" aria-label="Formulario de inicio de sesión">
+    <h1 class="title">Ingresar</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required autocomplete="username" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          required
+          autocomplete="current-password"
+        />
+      </mat-form-field>
+      <button mat-flat-button color="primary" [disabled]="form.invalid">Ingresar</button>
+    </form>
+  </mat-card>
+</section>
