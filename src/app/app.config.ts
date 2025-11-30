@@ -13,6 +13,8 @@ import { routes } from './app.routes';
 import { environment } from '../environments/environment';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getEsPaginatorIntl } from './core/i18n/paginator-intl';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    { provide: MatPaginatorIntl, useValue: getEsPaginatorIntl() }
   ],
 };
