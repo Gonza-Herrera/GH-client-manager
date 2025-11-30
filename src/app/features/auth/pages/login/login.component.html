@@ -1,22 +1,59 @@
 <section class="center">
   <mat-card class="card" aria-label="Formulario de inicio de sesión">
     <h1 class="title">Ingresar</h1>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form" novalidate>
       <mat-form-field appearance="outline" class="full">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" required autocomplete="username" />
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          required
+          autocomplete="username"
+          aria-required="true"
+          aria-describedby="email-error"
+        />
+        <mat-error id="email-error" *ngIf="hasError('email', 'required')">
+          El email es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="hasError('email', 'email')">
+          Debes ingresar un email válido.
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full">
         <mat-label>Contraseña</mat-label>
         <input
           matInput
-          type="password"
+          [type]="hide ? 'password' : 'text'"
           formControlName="password"
           required
           autocomplete="current-password"
+          aria-required="true"
+          aria-describedby="password-error"
         />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+        >
+          <mat-icon>{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+
+        <mat-error id="password-error" *ngIf="hasError('password', 'required')">
+          La contraseña es obligatoria.
+        </mat-error>
+        <mat-error *ngIf="hasError('password', 'minlength')">
+          La contraseña debe tener al menos 6 caracteres.
+        </mat-error>
       </mat-form-field>
-      <button mat-flat-button color="primary" [disabled]="form.invalid">Ingresar</button>
+
+      <button mat-flat-button color="primary" class="full" [disabled]="form.invalid || loading">
+        <mat-icon class="btn-icon" aria-hidden="true">login</mat-icon>
+        {{ loading ? 'Ingresando...' : 'Ingresar' }}
+      </button>
     </form>
   </mat-card>
 </section>
