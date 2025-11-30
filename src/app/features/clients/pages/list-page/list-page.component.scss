@@ -1,0 +1,15 @@
+.stack {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+.title {
+  margin: 8px 0;
+}
+
+.metrics {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
