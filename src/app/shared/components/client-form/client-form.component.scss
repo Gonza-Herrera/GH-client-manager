@@ -1,5 +1,6 @@
 .grid {
   display: grid;
-  gap: var(--cm-spacing);
+  gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  padding: 16px;
 }

@@ -1,0 +1,27 @@
+.spacer {
+  flex: 1;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  font-weight: 600;
+}
+
+.page {
+  padding: var(--cm-spacing);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.user-btn .email {
+  margin-left: 8px;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

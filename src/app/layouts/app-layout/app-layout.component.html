@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <span class="brand">Client Manager</span>
+  <span class="spacer"></span>
+
+  <a mat-button routerLink="/clients"><mat-icon>group</mat-icon> Clientes</a>
+  <a mat-button routerLink="/clients/new"><mat-icon>person_add</mat-icon> Nuevo</a>
+
+  <button mat-button [matMenuTriggerFor]="menu" class="user-btn">
+    <mat-icon>account_circle</mat-icon>
+    <span class="email" *ngIf="auth.user() as u">{{ u.email }}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon color="warn">logout</mat-icon>
+      <span>Cerrar Sesión</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

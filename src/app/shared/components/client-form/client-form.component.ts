@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { BirthdatePipe } from '../../../core/pipes/birthdate.pipe';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'cm-client-form',
@@ -14,6 +15,7 @@ import { BirthdatePipe } from '../../../core/pipes/birthdate.pipe';
     MatInputModule,
     MatButtonModule,
     BirthdatePipe,
+    NgIf
   ],
   templateUrl: `./client-form.component.html`,
   styleUrls: ['./client-form.component.scss'],
