@@ -1,0 +1,33 @@
+<section class="stack">
+  <div class="header">
+    <h1 class="title">Clientes</h1>
+  </div>
+
+  <cm-filter-bar (filter)="search.set($event)"></cm-filter-bar>
+
+  <mat-card *ngIf="filtered().length === 0 && fs.clients().length > 0" class="empty-card">
+    <p>
+      No se encontraron clientes para la búsqueda "<strong>{{ search() }}</strong
+      >".
+    </p>
+  </mat-card>
+
+  <div class="metrics card" aria-live="polite" *ngIf="filtered().length > 0">
+    <p>
+      Promedio de edad: <strong>{{ fs.avgAge() }}</strong>
+    </p>
+    <p>
+      Desviación estándar: <strong>{{ fs.stdDevAge() }}</strong>
+    </p>
+  </div>
+
+  <div class="card" *ngIf="filtered().length > 0">
+    <cm-client-table [data]="filtered()" [total]="fs.total()"></cm-client-table>
+  </div>
+
+  <div class="actions" *ngIf="hasMore() && filtered().length > 0">
+    <button mat-stroked-button (click)="loadMore()">
+      <mat-icon>expand_more</mat-icon> Cargar más
+    </button>
+  </div>
+</section>

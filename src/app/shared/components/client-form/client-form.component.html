@@ -1,0 +1,43 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="grid"
+  aria-label="Formulario de alta de cliente"
+  novalidate
+>
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombre" required aria-required="true" />
+    <mat-error *ngIf="hasError('nombre', 'required')"> El nombre es obligatorio. </mat-error>
+    <mat-error *ngIf="hasError('nombre', 'pattern')"> Solo se permiten letras. </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="apellido" required aria-required="true" />
+    <mat-error *ngIf="hasError('apellido', 'required')"> El apellido es obligatorio. </mat-error>
+    <mat-error *ngIf="hasError('apellido', 'pattern')"> Solo se permiten letras. </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Edad</mat-label>
+    <input matInput type="number" formControlName="edad" required min="0" aria-required="true" />
+    <mat-error *ngIf="hasError('edad', 'required')"> La edad es obligatoria. </mat-error>
+    <mat-error *ngIf="hasError('edad', 'min')"> La edad no puede ser negativa. </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Fecha de nacimiento</mat-label>
+    <input matInput type="date" formControlName="fechaNacimiento" required aria-required="true" />
+    <mat-error *ngIf="hasError('fechaNacimiento', 'required')">
+      La fecha de nacimiento es obligatoria.
+    </mat-error>
+    <mat-hint *ngIf="form.value.fechaNacimiento">
+      {{ form.value.fechaNacimiento | birthdate }}
+    </mat-hint>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" class="submit" [disabled]="form.invalid || loading">
+    {{ loading ? 'Guardando…' : 'Guardar' }}
+  </button>
+</form>

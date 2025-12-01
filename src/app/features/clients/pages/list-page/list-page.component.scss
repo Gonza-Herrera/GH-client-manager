@@ -1,0 +1,25 @@
+.stack {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+.title {
+  margin: 8px 0;
+}
+
+.metrics {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 0px 16px;
+}
+
+.empty-card {
+  padding: 0px 16px;
+  text-align: center;
+  background: var(--cm-surface);
+  border: 1px solid var(--cm-border);
+  border-radius: 12px;
+  color: var(--cm-text);
+}
