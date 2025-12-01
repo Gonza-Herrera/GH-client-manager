@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,23 +20,36 @@ import { NgIf } from '@angular/common';
   templateUrl: `./client-form.component.html`,
   styleUrls: ['./client-form.component.scss'],
 })
-
 export class ClientFormComponent {
-
   @Output() save = new EventEmitter<any>();
-  form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      edad: [0, [Validators.required, Validators.min(0)]],
-      fechaNacimiento: ['', Validators.required],
-    });
+  private fb = inject(FormBuilder);
+
+  loading = false;
+  submitted = false;
+
+  form = this.fb.group({
+    nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/)]],
+    apellido: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/)]],
+    edad: [null, [Validators.required, Validators.min(0)]],
+    fechaNacimiento: ['', [Validators.required]],
+  });
+
+  hasError(controlName: string, errorName: string) {
+    const c = this.form.get(controlName);
+    return c?.hasError(errorName) && (c.touched || c.dirty || this.submitted);
   }
 
-  submit() {
-    if (this.form.valid) this.save.emit(this.form.value);
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.loading = true;
+    this.save.emit(this.form.getRawValue());
+    this.loading = false;
   }
-  
 }

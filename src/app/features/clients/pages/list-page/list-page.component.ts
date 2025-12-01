@@ -3,11 +3,13 @@ import { FirestoreService } from '../../../../core/services/firestone.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { ClientTableComponent } from '../../../../shared/components/client-table/client-table.component';
 import { FilterBarComponent } from '../../../../shared/components/filter-bar/filter-bar.component';
+import { MatCard } from "@angular/material/card";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   standalone: true,
   selector: 'cm-client-list-page',
-  imports: [ClientTableComponent, FilterBarComponent, NgIf],
+  imports: [ClientTableComponent, FilterBarComponent, NgIf, MatCard, MatIcon],
   templateUrl: './list-page.component.html',
   styleUrls: ['./list-page.component.scss'],
 })

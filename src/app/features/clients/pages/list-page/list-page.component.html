@@ -1,8 +1,18 @@
 <section class="stack">
-  <h1 class="title">Clientes</h1>
+  <div class="header">
+    <h1 class="title">Clientes</h1>
+  </div>
+
   <cm-filter-bar (filter)="search.set($event)"></cm-filter-bar>
 
-  <div class="metrics" aria-live="polite">
+  <mat-card *ngIf="filtered().length === 0 && fs.clients().length > 0" class="empty-card">
+    <p>
+      No se encontraron clientes para la búsqueda "<strong>{{ search() }}</strong
+      >".
+    </p>
+  </mat-card>
+
+  <div class="metrics card" aria-live="polite" *ngIf="filtered().length > 0">
     <p>
       Promedio de edad: <strong>{{ fs.avgAge() }}</strong>
     </p>
@@ -11,6 +21,13 @@
     </p>
   </div>
 
-  <cm-client-table [data]="filtered()" [total]="fs.total()"></cm-client-table>
-  <button (click)="loadMore()" *ngIf="hasMore()">Cargar más</button>
+  <div class="card" *ngIf="filtered().length > 0">
+    <cm-client-table [data]="filtered()" [total]="fs.total()"></cm-client-table>
+  </div>
+
+  <div class="actions" *ngIf="hasMore() && filtered().length > 0">
+    <button mat-stroked-button (click)="loadMore()">
+      <mat-icon>expand_more</mat-icon> Cargar más
+    </button>
+  </div>
 </section>
