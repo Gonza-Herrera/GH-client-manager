@@ -15,6 +15,7 @@ import {
   getCountFromServer,
 } from '@angular/fire/firestore';
 import { Client } from '../models/client.model';
+import { LoadingService } from './loading.service';
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
@@ -24,6 +25,7 @@ export class FirestoreService {
   private _cursor: any = null;
   private _pageSize = 10;
   private _total = signal(0);
+  private loadingSvc = inject(LoadingService);
 
   clients = this._clients.asReadonly();
   loading = this._loading.asReadonly();
@@ -55,6 +57,7 @@ export class FirestoreService {
 
   async loadFirstPage() {
     this._loading.set(true);
+    this.loadingSvc.isLoading.set(true);
     try {
       const q = query(this.col(), orderBy('createdAt', 'desc'), limit(this._pageSize));
       const snap = await getDocs(q);
@@ -65,12 +68,14 @@ export class FirestoreService {
       await this.countAll();
     } finally {
       this._loading.set(false);
+      this.loadingSvc.isLoading.set(false); 
     }
   }
 
   async loadNextPage() {
     if (!this._cursor) return;
     this._loading.set(true);
+    this.loadingSvc.isLoading.set(true); 
     try {
       const q = query(
         this.col(),
@@ -85,11 +90,17 @@ export class FirestoreService {
       this._cursor = snap.docs[snap.docs.length - 1] || null;
     } finally {
       this._loading.set(false);
+      this.loadingSvc.isLoading.set(false); 
     }
   }
 
   async addClient(c: Omit<Client, 'createdAt'>) {
-    await addDoc(this.col(), { ...c, createdAt: Date.now() });
-    await this.loadFirstPage();
+    this.loadingSvc.isLoading.set(true);
+    try {
+      await addDoc(this.col(), { ...c, createdAt: Date.now() });
+      await this.loadFirstPage();
+    } finally {
+      this.loadingSvc.isLoading.set(false);
+    }
   }
 }

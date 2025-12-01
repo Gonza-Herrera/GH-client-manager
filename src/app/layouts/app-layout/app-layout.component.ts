@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
+import { SpinnerOverlayComponent } from '../../core/ui/spinner-overlay/spinner-overlay.component';
 
 @Component({
   selector: 'app-layout',
@@ -17,7 +18,8 @@ import { AuthService } from '../../core/services/auth.service';
     MatIconModule,
     MatMenuModule,
     NgIf,
-    RouterOutlet
+    RouterOutlet,
+    SpinnerOverlayComponent
 ],
   templateUrl: './app-layout.component.html',
   styleUrls: [
