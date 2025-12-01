@@ -2,19 +2,48 @@
   <span class="brand">Client Manager</span>
   <span class="spacer"></span>
 
-  <a mat-button routerLink="/clients"><mat-icon>group</mat-icon> Clientes</a>
-  <a mat-button routerLink="/clients/new"><mat-icon>person_add</mat-icon> Nuevo</a>
+  <!-- Acciones visibles en ≥600px -->
+  <div class="nav-actions desktop-only" role="navigation" aria-label="Acciones principales">
+    <a mat-button routerLink="/clients" aria-label="Clientes">
+      <mat-icon>group</mat-icon><span class="btn-text">Clientes</span>
+    </a>
+    <a mat-button routerLink="/clients/new" aria-label="Nuevo cliente">
+      <mat-icon>person_add</mat-icon><span class="btn-text">Nuevo</span>
+    </a>
 
-  <button mat-button [matMenuTriggerFor]="menu" class="user-btn">
-    <mat-icon>account_circle</mat-icon>
-    <span class="email" *ngIf="auth.user() as u">{{ u.email }}</span>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">
-      <mat-icon color="warn">logout</mat-icon>
-      <span>Cerrar Sesión</span>
+    <!-- Botón usuario + email (ocultamos el email en móvil) -->
+    <button mat-button [matMenuTriggerFor]="userMenu" class="user-btn" aria-label="Menú de usuario">
+      <mat-icon>account_circle</mat-icon>
+      <span class="email">{{ auth.user()?.email }}</span>
     </button>
-  </mat-menu>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon color="warn">logout</mat-icon>
+        <span>Salir</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <!-- Menú compacto visible en <600px -->
+  <div class="mobile-only">
+    <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="Abrir menú">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #moreMenu="matMenu">
+      <button mat-menu-item routerLink="/clients">
+        <mat-icon>group</mat-icon>
+        <span>Clientes</span>
+      </button>
+      <button mat-menu-item routerLink="/clients/new">
+        <mat-icon>person_add</mat-icon>
+        <span>Nuevo</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon color="warn">logout</mat-icon>
+        <span>Salir</span>
+      </button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
 
 <main class="page">
